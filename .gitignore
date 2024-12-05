@@ -1,2 +1,5 @@
-./src/engine/engine.exe
-/venv
+# Ignore the engine folder containing stockfish executable
+stockfish.exe
+
+# Ignore the virtual environment folder
+/venv/

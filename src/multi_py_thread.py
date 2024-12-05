@@ -8,12 +8,11 @@ import time
 # Function to process a subset of FENs and return the best move for each
 def process_fens_for_thread(start_idx, end_idx, thread_id):
     # Create a new instance of Stockfish for this thread
-    stockfish = Stockfish(path="./src/engine/stockfish.exe", depth=15, parameters={"Threads": 2, "Minimum Thinking Time": 10})
+    stockfish = Stockfish(path="./stockfish.exe", depth=15, parameters={"Threads": 2, "Minimum Thinking Time": 10})
     results = []
 
     for index in range(start_idx, end_idx):
         fen = fens[index]
-        start_time = time.time()
         result = {}
 
         try:
@@ -32,13 +31,11 @@ def process_fens_for_thread(start_idx, end_idx, thread_id):
         except Exception as e:
             result['error'] = str(e)
 
-        # Time evaluation and progress
-        elapsed_time = time.time() - start_time
         progress = ((index + 1) / len(fens)) * 100
 
         # Print progress every 10% interval
         if progress % 10 == 0 or progress == 100:
-            print(f"Thread {thread_id}: Progress: {progress:.0f}% done, Time elapsed: {elapsed_time:.2f} seconds")
+            print(f"Thread {thread_id}: Progress: {progress:.0f}% done")
 
         results.append(result)
 

@@ -6,7 +6,7 @@ import time
 
 start_time = time.time()
 
-stockfish = Stockfish(path="./src/engine/stockfish.exe", depth=17, parameters={"Threads": 4, "Minimum Thinking Time": 10})
+stockfish = Stockfish(path="./stockfish.exe", depth=17, parameters={"Threads": 4, "Minimum Thinking Time": 10})
 
 # Function to calculate and print progress
 def calculate_progress(current, total):
