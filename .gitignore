@@ -1,5 +1,9 @@
-# Ignore the engine folder containing stockfish executable
+
 stockfish.exe
 
-# Ignore the virtual environment folder
-/venv/
+/myenv/
+
+__pycache__
+
+test_implementations
+
