@@ -58,3 +58,5 @@ fens = ["6Q1/p1p3P1/1k1p2N1/p1n1p2P/5r2/1b6/2n4K/b1q2b2 b - - 29 30",
 "3R1bQR/p1p5/1k1p4/1P2p2P/8/6P1/2n3KP/b1q2b2 w - - 8 2",
 "3R1bQR/p1p5/k2p4/p6P/3N4/1b4P1/3K3P/b7 b - - 10 12",
 "5b2/p1p3P1/3p2k1/1Pn1p2P/8/1b4P1/6KP/b1q5 b - - 13 8"]
+
+
