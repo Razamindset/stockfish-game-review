@@ -1,12 +1,10 @@
 from flask import Flask, request, jsonify
 from src.utils.parse_pgn import parse_pgn
-from src.utils.analyze import analyze_position
 from src.utils.generate_report import generate_report
 from src.utils.stockfish_pool import StockfishPool
 import os
 import asyncio
 import concurrent.futures
-from stockfish import Stockfish
 import time
 
 
@@ -21,22 +19,17 @@ stockfish_pool = StockfishPool(
 
 
 def process_fens_for_thread(start_idx, end_idx, thread_id, fen_list):
-    #! Accesing the engine from the pool was causing trouble so for new we define a new instance per thread for now
-    start_time_to_start_engine = time.time()
-    # engine_instance = Stockfish(path="./stockfish.exe", depth=DEPTH, parameters={"Threads": 1, "Minimum Thinking Time": 10, "Hash": 512})
-
-    engine_instance = asyncio.run(stockfish_pool.get_stockfish())
-    if(engine_instance == None):
-        print("No engine available")
-        return []
+   
     results = []
-    print("Time taken to spin up engine: ", time.time() - start_time_to_start_engine)
 
     try:
         for index in range(start_idx, end_idx):
             fen = fen_list[index]
-            move_analysis = asyncio.run(analyze_position(engine_instance, fen, DEPTH))
+
+            move_analysis = asyncio.run(stockfish_pool.analyze_position(fen, DEPTH))
+
             print(move_analysis)
+
             results.append(move_analysis)
 
         return results
@@ -58,7 +51,6 @@ def review_game():
         # Step 1: Parse PGN
         fen_list = parse_pgn(pgn_data)
 
-        # Use multiple threads to do analysis side by side
 
         #! Single threaded approach
         # analysis_results = []
@@ -75,7 +67,7 @@ def review_game():
         chunkk_size = total_fens // THREADS
         chunks = [(i * chunkk_size, (i + 1) * chunkk_size) for i in range(THREADS)]
         chunks[-1] = (chunks[-1][0], total_fens) # Adjust the last chunk to include the remaining fens
-        print(chunks[-1])
+
         start_time = time.time()
 
 
